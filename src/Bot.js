@@ -1,24 +1,45 @@
+const Discord = require("discord.js")
+
 class Bot {
-  constructor (client, commands) {
+  constructor (config, commands, client = new Discord.Client()) {
     this.client = client
+    this.token = config.token
+    this.prefix = config.prefix
     this.commands = commands
   }
 
   start() {
     this.client.on('ready', () => {
-      console.log(`Logged in as ${client.user.tag}!`)
+      
     })
+    this.client.on('message', this._handleMessage)
+    this.client.login(this.token)
+  }
 
-    this.client.on('message', message => {
-      const command = this.commands[message]
-      if (command) {
-        command.execute(message)
-      } else {
-        message.reply(`Unknown command ${message}`)
-      }
-    })
+  stop() {
+    this.client.destroy()
+  }
 
-    this.client.login('token')
+  _handleMessage(message) {
+    if(this._validCommand(message)) {
+      const content = message.content
+      const commandName = this._getCommandName(content)
+      const args = this._getArgs(content)
+      const command = this.commands[commandName]
+      command.execute(message, args)
+    }
+  }
+
+  _getCommandName(content) {
+    return content.split(' ')[0].replace(this.prefix, '')
+  }
+
+  _validCommand(message) {
+    return !message.author.bot && message.content.startsWith(this.prefix)
+  }
+
+  _getArgs(content) {
+    return content.split(' ').slice(1)
   }
 }
 
