@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "node index.js",
+    "start": "node start.js",
     "test": "scripts/test-with-coverage.sh"
   },
   "devDependencies": {
@@ -17,5 +17,7 @@
     "source-map-support": "^0.5.9",
     "verify-it": "1.2.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  }
 }
