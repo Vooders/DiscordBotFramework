@@ -11,7 +11,7 @@ describe('Bot', () => {
   }
 
   const fakeLogger = {
-    info: (message) => null
+    info: () => null
   }
 
   const testCommands = commandBuilder('test/commands/')

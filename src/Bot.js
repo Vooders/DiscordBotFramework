@@ -35,9 +35,17 @@ class Bot {
       if(actions.validCommand(message)) {
         const content = message.content
         const commandName = actions.getCommandName(content)
-        const args = actions.getArgs(content)
-        const command = this.commands[commandName]
-        command.execute(message, args)
+        if (commandName === 'commands') {
+          message.reply(actions.getCommands())
+        } else {
+          const args = actions.getArgs(content)
+          const command = this.commands[commandName]
+          if (command) {
+            command.execute(message, args)
+          } else {
+            message.reply(`Unknown command ${this.prefix}${commandName}\nType ${this.prefix}commands to see available commands`)
+          }
+        }
       }
     }
   }
