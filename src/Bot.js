@@ -33,6 +33,7 @@ class Bot {
   getHandleMessage(logger, actions) {
     return (message) => {
       if(actions.validCommand(message)) {
+        logger.info(`${message.author.username} used command ${message.content}`)
         const content = message.content
         const commandName = actions.getCommandName(content)
         if (commandName === 'commands') {
