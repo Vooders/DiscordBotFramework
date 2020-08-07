@@ -16,7 +16,6 @@ describe('Bot', () => {
     verify.it('should destroy the client', () => {
       const mockClient = td.object(new Discord.Client())
       const bot = new Bot(config, testCommands, mockClient)
-      bot.start()
       bot.stop()
       td.verify(mockClient.destroy())
     })
@@ -27,7 +26,6 @@ describe('Bot', () => {
       const mockClient = td.object(new Discord.Client())
       const bot = new Bot(config, testCommands, mockClient)
       bot.start()
-      bot.stop()
       td.verify(mockClient.on('ready', td.matchers.isA(Function)))
     })
 
@@ -35,7 +33,6 @@ describe('Bot', () => {
       const mockClient = td.object(new Discord.Client())
       const bot = new Bot(config, testCommands, mockClient)
       bot.start()
-      bot.stop()
       td.verify(mockClient.on('message', td.matchers.isA(Function)))
     })
 
@@ -43,7 +40,6 @@ describe('Bot', () => {
       const mockClient = td.object(new Discord.Client())
       const bot = new Bot(config, testCommands, mockClient)
       bot.start()
-      bot.stop()
       td.verify(mockClient.login(config.token))
     })
   })

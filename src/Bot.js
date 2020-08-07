@@ -10,7 +10,7 @@ class Bot {
 
   start() {
     this.client.on('ready', () => {
-      
+      console.log('ready')
     })
     this.client.on('message', this._handleMessage)
     this.client.login(this.token)
