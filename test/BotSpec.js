@@ -56,80 +56,73 @@ describe('Bot', () => {
     })
   })
 
-  describe('_handleReady', () => {
+  describe('actions', () => {
+    describe('getArgs', () => {
+      verify.it('should return an array', () => {
+        const bot = new Bot(config, testCommands)
+        bot.actions.getArgs('').should.be.an('array')
+      })
+  
+      verify.it('should return all words after the command', Gen.array(Gen.word, 5), (args) => {
+        const content = `$$someCommand ${args.join(' ')}`
+        const bot = new Bot(config, testCommands)
+        bot.actions.getArgs(content).should.eql(args)
+      })
+  
+      verify.it('should return and empty array if no args', () => {
+        const content = `$$someCommand`
+        const bot = new Bot(config, testCommands)
+        bot.actions.getArgs(content).should.eql([])
+      })
+    })
+
+    describe('validCommand', () => {
+      verify.it('should return true if the author is not a bot and command starts with prefix', () => {
+        const bot = new Bot(config, testCommands)
+        const fakeMessage = generateMessage(`${config.prefix}validCommand`)
+        bot.actions.validCommand(fakeMessage).should.eql(true)
+      })
+  
+      verify.it('should return false if the author is a bot', () => {
+        const bot = new Bot(config, testCommands)
+        const fakeMessage = generateMessage(`${config.prefix}validCommand`)
+        fakeMessage.author.bot = true
+        bot.actions.validCommand(fakeMessage).should.eql(false)
+      })
+  
+      verify.it('should return false if message does not start with prefix', () => {
+        const bot = new Bot(config, testCommands)
+        const fakeMessage = generateMessage('invalidCommand')
+        bot.actions.validCommand(fakeMessage).should.eql(false)
+      })
+    })
+
+    describe('getCommandName', () => {
+      verify.it('should return the first word of the message without the prefix', Gen.array(Gen.word, 5), (args) => {
+        const commandName = 'bob'
+        const content = `${config.prefix}${commandName} ${args.join(' ')}`
+        const bot = new Bot(config, testCommands)
+        bot.actions.getCommandName(content).should.eql(commandName)
+      })
+    })
+  })
+
+  describe('handleReady', () => {
     verify.it('should log "Bot ready" on start up', () => {
       const mockLogger = td.object(fakeLogger)
       const bot = new Bot(config, testCommands, null, mockLogger)
-      bot._handleReady()
+      bot.getHandleReady(mockLogger, bot.actions)()
       td.verify(mockLogger.info('Bot ready'))
     })
-
-    verify.it('should log out all commands and their descriptions', () => {
-      const mockLogger = td.object(fakeLogger)
-      const bot = new Bot(config, testCommands, null, mockLogger)
-      bot._handleReady()
-      td.verify(mockLogger.info('Commands:'), { times: 1})
-      td.verify(mockLogger.info(`${config.prefix}hello - say hello`), { times: 1})
-      td.verify(mockLogger.info(`${config.prefix}goodbye - say goodbye`), { times: 1})
-    })
   })
 
-  describe('_validCommand', () => {
-    verify.it('should return true if the author is not a bot and command starts with prefix', () => {
-      const bot = new Bot(config, testCommands)
-      const fakeMessage = generateMessage(`${config.prefix}validCommand`)
-      bot._validCommand(fakeMessage).should.eql(true)
-    })
-
-    verify.it('should return false if the author is a bot', () => {
-      const bot = new Bot(config, testCommands)
-      const fakeMessage = generateMessage(`${config.prefix}validCommand`)
-      fakeMessage.author.bot = true
-      bot._validCommand(fakeMessage).should.eql(false)
-    })
-
-    verify.it('should return false if message does not start with prefix', () => {
-      const bot = new Bot(config, testCommands)
-      const fakeMessage = generateMessage('invalidCommand')
-      bot._validCommand(fakeMessage).should.eql(false)
-    })
-  })
-
-  describe('_getArgs', () => {
-    verify.it('should return an array', () => {
-      const bot = new Bot(config, testCommands)
-      bot._getArgs('').should.be.an('array')
-    })
-
-    verify.it('should return all words after the command', Gen.array(Gen.word, 5), (args) => {
-      const content = `$$someCommand ${args.join(' ')}`
-      const bot = new Bot(config, testCommands)
-      bot._getArgs(content).should.eql(args)
-    })
-
-    verify.it('should return and empty array if no args', () => {
-      const content = `$$someCommand`
-      const bot = new Bot(config, testCommands)
-      bot._getArgs(content).should.eql([])
-    })
-  })
-
-  describe('_handleMessage', () => {
+  describe('handleMessage', () => {
     verify.it('should call the correct command', () => {
       const mockCommands = td.object(testCommands)
       const bot = new Bot(config, mockCommands)
       const message = generateMessage(`${config.prefix}hello`)
-      bot._handleMessage(message)
+      bot.getHandleMessage(fakeLogger, bot.actions)(message)
       td.verify(mockCommands.hello.execute(message, []))
-    })
-  })
-
-  describe('_getCommandName', () => {
-    verify.it('should return the first word of the message without the prefix', Gen.array(Gen.word, 5), (args) => {
-      const commandName = 'bob'
-      const content = `${config.prefix}${commandName} ${args.join(' ')}`
-      const bot = new Bot(config, testCommands)
-      bot._getCommandName(content).should.eql(commandName)
     })
   })
 })
