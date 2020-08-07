@@ -39,6 +39,6 @@ Run the tests:
 npm install
 npm test
 ```
-_tests need to be calncelled with `ctrl+c` for some reason_
+_tests need to be cancelled with `ctrl+c` for some reason_
 
 _I'll fix this one day_
