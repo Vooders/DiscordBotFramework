@@ -10,6 +10,10 @@ describe('Bot', () => {
     prefix: '$$'
   }
 
+  const fakeLogger = {
+    info: (message) => null
+  }
+
   const testCommands = commandBuilder('test/commands/')
 
   describe('stop()', () => {
@@ -18,6 +22,14 @@ describe('Bot', () => {
       const bot = new Bot(config, testCommands, mockClient)
       bot.stop()
       td.verify(mockClient.destroy())
+    })
+
+    verify.it('should log "Stopping bot"', () => {
+      const mockClient = td.object(new Discord.Client())
+      const mockLogger = td.object(fakeLogger)
+      const bot = new Bot(config, testCommands, mockClient, mockLogger)
+      bot.stop()
+      td.verify(mockLogger.info('Stopping bot'))
     })
   })
 
@@ -41,6 +53,24 @@ describe('Bot', () => {
       const bot = new Bot(config, testCommands, mockClient)
       bot.start()
       td.verify(mockClient.login(config.token))
+    })
+  })
+
+  describe('_handleReady', () => {
+    verify.it('should log "Bot ready" on start up', () => {
+      const mockLogger = td.object(fakeLogger)
+      const bot = new Bot(config, testCommands, null, mockLogger)
+      bot._handleReady()
+      td.verify(mockLogger.info('Bot ready'))
+    })
+
+    verify.it('should log out all commands and their descriptions', () => {
+      const mockLogger = td.object(fakeLogger)
+      const bot = new Bot(config, testCommands, null, mockLogger)
+      bot._handleReady()
+      td.verify(mockLogger.info('Commands:'), { times: 1})
+      td.verify(mockLogger.info(`${config.prefix}hello - say hello`), { times: 1})
+      td.verify(mockLogger.info(`${config.prefix}goodbye - say goodbye`), { times: 1})
     })
   })
 
