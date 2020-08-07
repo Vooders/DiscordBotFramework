@@ -1,7 +1,5 @@
 # A Basic Discord Bot
 
-_A sample stub project for javascript._
-
 ## Install
 * Clone the repo
 * Install deplendencies run `npm install`
