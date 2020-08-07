@@ -3,4 +3,4 @@ node_modules
 test-reports
 dist
 yarn-error.log
-./config.json
+config.json
