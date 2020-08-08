@@ -31,6 +31,15 @@ module.exports = {
 }
 ```
 
+#### name
+The name of the command this will be the word typed to call the command.
+
+#### description
+Some text that explains what the command does.
+
+#### execute
+A function to execute when the comand is called.
+
 ## Development
 
 Run the tests:
