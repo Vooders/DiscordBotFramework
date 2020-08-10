@@ -1,7 +1,10 @@
 {
   "name": "javascript-stub",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "index.js",
+  "publishConfig": { 
+    "registry": "https://npm.pkg.github.com/"
+  },
   "license": "UNLICENSED",
   "scripts": {
     "start": "node start.js",
