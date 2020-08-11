@@ -1,25 +1,19 @@
 # A Basic Discord Bot
 
+A simple Discord bot framework which can be configured with commands
+
 ## Install
-* Clone the repo
-* Install deplendencies run `npm install`
-* Copy `config-template.json` and rename to `config.json`
-* Add your bot token to the token field of `config.json`
-
-## Run
 ```sh
-npm start
+npm install @vooders/discord-bot-framework
 ```
 
-## Stop
-```
-ctrl + C
+## Usage
+```js
+
 ```
 
-## Adding commands
-Add commands to the `commands` directory
-
-Commands should be in the following format
+## Creating commands
+Create your commands in individual files in the following format
 ```js
 // hello.js
 module.exports = {
@@ -31,6 +25,16 @@ module.exports = {
 }
 ```
 
+## Configuration
+The command prefix and Discord bot token must be supplied to any bot via configuration in the following format.
+
+```
+{
+  "prefix": "!!",
+  "token": "discord-bot-token"
+}
+```
+
 #### name
 The name of the command this will be the word typed to call the command.
 
@@ -39,15 +43,3 @@ Some text that explains what the command does.
 
 #### execute
 A function to execute when the comand is called.
-
-## Development
-
-Run the tests:
-
-```sh
-npm install
-npm test
-```
-_tests need to be cancelled with `ctrl+c` for some reason_
-
-_I'll fix this one day_
