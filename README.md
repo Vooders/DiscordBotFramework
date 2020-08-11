@@ -9,15 +9,14 @@ npm install @vooders/discord-bot-framework
 
 ## Usage
 ```js
-const BotFramework = require('@vooders/discord-bot-framework')
+const Bot = require('@vooders/discord-bot-framework').Bot
 
 const config = {
   "prefix": "!!",
   "token": "discord-bot-token"
 }
 
-const commands = BotFramework.commandBuilder('commands/')
-const bot = new BotFramework.Bot(config, commands)
+const bot = new Bot(config)
 
 try {
   bot.start()
@@ -27,7 +26,7 @@ try {
 ```
 
 ## Creating commands
-Commands can be wrote as individual files or as a single object
+Commands should be wrote as individual files in a directory at the root of the project. The library expects this directory to be named `commands` this can be overridden by adding `commandDirectory` to the config.
 
 The `execute` function will be called with the `message` object and an array of strings containing the arguments.
 
@@ -42,38 +41,10 @@ module.exports = {
 }
 ```
 
-Multiple commands per file
-```js
-module.exports = {
-  "hello": {
-    name: "hello",
-    description: "say hello",
-    execute: (message, args) => {
-      message.channel.send(`hello there ${args[0]}`)
-    }
-  },
-  "goodbye": {
-    name: "goodbye",
-    description: "say goodbye",
-    execute: (message, args) => {
-      message.channel.send(`goodbye ${args[0]}`)
-    }
-  }
-}
-```
-
 A command is expressed as a JSON object with the following keys
 * name - The name of the command this will be the word typed to call the command.
 * description - Some text that explains what the command does.
 * execute - A function to execute when the comand is called.
-
-## Command Builder
-If your commands are defined in separate files you must combine them into a single object using the commandBuilder.
-```js
-const commandBuilder = require('@vooders/discord-bot-framework').commandBuilder
-
-const commands = commandBuilder('path/to/commands')
-```
 
 ## Configuration
 The command prefix and Discord bot token must be supplied to any bot via configuration in the following format.
@@ -81,6 +52,7 @@ The command prefix and Discord bot token must be supplied to any bot via configu
 ```
 {
   "prefix": "!!",
-  "token": "discord-bot-token"
+  "token": "discord-bot-token",
+  "commandDirectory?": "optional override of command dir"
 }
 ```

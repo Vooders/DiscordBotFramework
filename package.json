@@ -1,6 +1,6 @@
 {
   "name": "@vooders/discord-bot-framework",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "index.js",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
