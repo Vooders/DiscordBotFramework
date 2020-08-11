@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const StubClient = require('./StubClient')
 const Gen = require('verify-it').Gen
 const td = require('testdouble')
+const commandBuilder = require('../src/commandBuilder')
 const Bot = require('../src/Bot')
 
 describe('Bot', () => {
@@ -14,12 +15,12 @@ describe('Bot', () => {
     info: () => null
   }
 
-  const testCommands = 'test/commands/'
+  const testCommands = commandBuilder('test/commands/')
 
   describe('stop()', () => {
     verify.it('should destroy the client', () => {
       const mockClient = td.object(StubClient)
-      const bot = new Bot(config, 'test/commands/', mockClient)
+      const bot = new Bot(config, testCommands, mockClient)
       bot.stop()
       td.verify(mockClient.destroy())
     })
@@ -27,7 +28,7 @@ describe('Bot', () => {
     verify.it('should log "Stopping bot"', () => {
       const mockClient = td.object(StubClient)
       const mockLogger = td.object(fakeLogger)
-      const bot = new Bot(config, 'test/commands/', mockClient, mockLogger)
+      const bot = new Bot(config, testCommands, mockClient, mockLogger)
       bot.stop()
       td.verify(mockLogger.info('Stopping bot'))
     })
