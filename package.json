@@ -1,8 +1,8 @@
 {
-  "name": "vooders-discord-bot-framework",
+  "name": "discord-bot-framework",
   "version": "0.1.3",
   "main": "index.js",
-  "publishConfig": { 
+  "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "license": "UNLICENSED",
