@@ -1,12 +1,21 @@
 const Discord = require("discord.js")
+const commandBuilder = require('./commandBuilder')
 
 class Bot {
-  constructor (config, commands, client = new Discord.Client(), logger) {
+  constructor (config, commandsPath, client = new Discord.Client(), logger) {
     this.client = client
     this.token = config.token
     this.prefix = config.prefix
-    this.commands = commands
+    this.commands = this.resolveCommands(commandsPath)
     this.logger = logger || require('./Logger')
+  }
+
+  resolveCommands(commandsPath) {
+    if (typeof commandsPath === 'string') {
+      return commandBuilder(commandsPath)
+    } else {
+      return commandsPath
+    }
   }
 
   async start() {
