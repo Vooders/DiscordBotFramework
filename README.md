@@ -49,13 +49,15 @@ module.exports = {
     name: "hello",
     description: "say hello",
     execute: (message, args) => {
-    message.channel.send(`hello there ${args[0]}`)
+      message.channel.send(`hello there ${args[0]}`)
+    }
   },
   "goodbye": {
     name: "goodbye",
     description: "say goodbye",
     execute: (message, args) => {
-    message.channel.send(`goodbye ${args[0]}`)
+      message.channel.send(`goodbye ${args[0]}`)
+    }
   }
 }
 ```
