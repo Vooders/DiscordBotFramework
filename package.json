@@ -1,6 +1,6 @@
 {
-  "name": "discord-bot-framework",
-  "version": "0.1.4",
+  "name": "@vooders/discord-bot-framework",
+  "version": "0.1.5",
   "main": "index.js",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
@@ -23,5 +23,18 @@
   },
   "dependencies": {
     "discord.js": "^12.2.0"
-  }
+  },
+  "description": "## Install * Clone the repo * Install deplendencies run `npm install` * Copy `config-template.json` and rename to `config.json` * Add your bot token to the token field of `config.json`",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vooders/discord-bot-framework.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/Vooders/discord-bot-framework/issues"
+  },
+  "homepage": "https://github.com/Vooders/discord-bot-framework#readme"
 }
