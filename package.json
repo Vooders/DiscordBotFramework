@@ -1,11 +1,11 @@
 {
   "name": "@vooders/discord-bot-framework",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "main": "index.js",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "scripts": {
     "start": "node start.js",
     "test": "scripts/test-with-coverage.sh"
@@ -24,7 +24,7 @@
   "dependencies": {
     "discord.js": "^12.2.0"
   },
-  "description": "## Install * Clone the repo * Install deplendencies run `npm install` * Copy `config-template.json` and rename to `config.json` * Add your bot token to the token field of `config.json`",
+  "description": "A simple Discord bot framework which can be loaded with commands",
   "directories": {
     "test": "test"
   },
@@ -32,7 +32,7 @@
     "type": "git",
     "url": "git+https://github.com/Vooders/discord-bot-framework.git"
   },
-  "author": "",
+  "author": "Vooders",
   "bugs": {
     "url": "https://github.com/Vooders/discord-bot-framework/issues"
   },
