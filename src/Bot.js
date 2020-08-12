@@ -1,14 +1,15 @@
 const Discord = require("discord.js")
+const Logger = require('./Logger')
 const commandBuilder = require('./commandBuilder')
 
 class Bot {
-  constructor (config, client = new Discord.Client(), logger) {
+  constructor (config, client = new Discord.Client(), logger = new Logger()) {
     const commandDirName = config.commandDirectory || 'commands'
     this.client = client
     this.token = config.token
     this.prefix = config.prefix
     this.commands = commandBuilder(commandDirName)
-    this.logger = logger || require('./Logger')
+    this.logger = logger
   }
 
   async start() {
